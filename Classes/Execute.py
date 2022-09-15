@@ -20,16 +20,16 @@ class Execute():
 				result = "%E2%9C%94%EF%B8%8F Command Executed Successfully"
 				self._.Send_Message(result)
 		cmd = " ".join(self.args)
-		sub = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
+		sub = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE, encoding='UTF-8')
 		if wait == True:
 			output , error = sub.communicate()
 			if error:
 				result = "%F0%9F%96%A5 Command Error : \n"
-				result += error.decode()
+				result += error
 				self._.Send_Message(result)
 			if output:
 				result = "%F0%9F%96%A5 Command Output : \n"
-				result += output.decode()
+				result += output
 				self._.Send_Message(result)
 			else:
 				result = "%E2%9C%94%EF%B8%8F Command Executed Successfully"
