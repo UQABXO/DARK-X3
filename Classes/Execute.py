@@ -1,5 +1,5 @@
 import subprocess
-import os
+import os, requests
 class Execute():
 	def __init__(self, _):
 		self._ = _
